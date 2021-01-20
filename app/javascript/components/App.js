@@ -7,6 +7,7 @@ import ApartmentIndex from './pages/ApartmentIndex'
 import ApartmentShow from './pages/ApartmentShow'
 import ApartmentNew from './pages/ApartmentNew'
 import NotFound from './pages/NotFound'
+import ProtectedIndex from './pages/ProtectedIndex'
 
 import mockApartments from './mockApartments.js'
 
@@ -39,6 +40,19 @@ class App extends React.Component {
 						render={(props) => (
 							<ApartmentIndex apartments={this.state.apartments} />
 						)}
+					/>
+
+					{/* Protected Index */}
+
+					<Route
+						path='/protectedindex'
+						render={(props) => {
+							let id = this.props.current_user.id
+							let userapartments = this.state.apartments.filter(
+								(apartments) => apartments.user_id === id
+							)
+							return <ProtectedIndex userapartments={userapartments} />
+						}}
 					/>
 
 					<Route
