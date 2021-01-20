@@ -141,7 +141,7 @@ class ApartmentNew extends Component {
 						</Form>
 					</div>
 				</div>
-				{this.state.submitted && <Redirect to='/myapartments' />}
+				{this.state.submitted && <Redirect to='/userapartments' />}
 			</React.Fragment>
 		)
 	}

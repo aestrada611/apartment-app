@@ -15,12 +15,48 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			apartments: mockApartments,
+			apartments: [],
 		}
+	}
+
+	componentDidMount(props) {
+		this.indexApartment()
+	}
+
+	indexApartment = () => {
+		fetch('/apartments')
+			.then((response) => {
+				return response.json()
+			})
+			.then((payload) => {
+				this.setState({ apartments: payload })
+			})
+			.catch((errors) => {
+				console.log('index error', errors)
+			})
 	}
 
 	createNewApartment = (newapartment) => {
 		console.log(newapartment)
+		fetch('/apartments', {
+			body: JSON.stringify(newapartment),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		})
+			.then((response) => {
+				if (response.status === 422) {
+					alert('There is something wrong with your submission.')
+				}
+				return response.json()
+			})
+			.then(() => {
+				this.indexApartment()
+			})
+			.catch((errors) => {
+				console.log('create errors', errors)
+			})
 	}
 
 	editApartment = (edited) => {
