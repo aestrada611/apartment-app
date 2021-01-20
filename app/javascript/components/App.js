@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ApartmentIndex from './pages/ApartmentIndex'
 import ApartmentShow from './pages/ApartmentShow'
+import ApartmentNew from './pages/ApartmentNew'
+import NotFound from './pages/NotFound'
 
 import mockApartments from './mockApartments.js'
 
@@ -14,6 +16,10 @@ class App extends React.Component {
 		this.state = {
 			apartments: mockApartments,
 		}
+	}
+
+	createNewApartment = (newapartment) => {
+		console.log(newapartment)
 	}
 
 	render() {
@@ -45,6 +51,20 @@ class App extends React.Component {
 							return <ApartmentShow apartment={apartment} />
 						}}
 					/>
+
+					<Route
+						path='/apartmentnew'
+						render={(props) => {
+							return (
+								<ApartmentNew
+									current_user={this.props.current_user}
+									createNewApartment={this.createNewApartment}
+								/>
+							)
+						}}
+					/>
+
+					<Route component={NotFound} />
 				</Switch>
 			</Router>
 		)
